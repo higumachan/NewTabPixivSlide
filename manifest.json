@@ -1,19 +1,17 @@
 {
   "name": "My Extension",
   "version": "0.0.1",
+  "manifest_version": 2,
   "description": "The first extension that I made.",
   "browser_action": {
     "default_icon": "icon.png"
   },
   "permissions": [
-    "http://api.flickr.com/"
+    "tabs",
+    "http://*/*",
+    "https://*/*"
   ],
- "browser_action": {
-    "default_icon": "icon.png",
-    "popup": "popup.html"
-  }, 
   "chrome_url_overrides": {
     "newtab": "newtab.html"
-  },
-  "manifest_version": 2
+  }
 }
