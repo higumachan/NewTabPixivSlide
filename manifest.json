@@ -1,6 +1,6 @@
 {
   "name": "新しいタブ - NEW",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "manifest_version": 2,
   "description": "The first extension that I made.",
   "icons": {
@@ -10,6 +10,10 @@
   "browser_action": {
     "default_icon": "icons/16.png",
     "default_title": "新しいタブ"
+  },
+  "background": {
+    "scripts": ["scripts/background.js"],
+    "persistent": false
   },
   "content_scripts": [
     {
