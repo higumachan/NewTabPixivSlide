@@ -1,17 +1,31 @@
 {
-  "name": "My Extension",
-  "version": "0.0.1",
+  "name": "新しいタブ - NEW",
+  "version": "0.0.2",
   "manifest_version": 2,
   "description": "The first extension that I made.",
-  "browser_action": {
-    "default_icon": "icon.png"
+  "icons": {
+    "48": "icons/48.png",
+    "128": "icons/128.png"
   },
+  "browser_action": {
+    "default_icon": "icons/16.png",
+    "default_title": "新しいタブ"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": ["scripts/jquery.js"]
+    }
+  ],
   "permissions": [
     "tabs",
     "http://*/*",
     "https://*/*"
   ],
   "chrome_url_overrides": {
-    "newtab": "newtab.html"
+    "newtab": "newtab/newtab.html"
   }
 }
