@@ -1,6 +1,6 @@
 // pixivのAPI叩く
 $(function () {
-	$.getJSON("http://spapi.pixiv.net/iphone/ranking.php?mode=day",
+	$.get("http://spapi.pixiv.net/iphone/ranking.php?mode=day",
 		function (data) {
 			console.log("oooooo");
 			$.each(data, function() {
@@ -11,4 +11,14 @@ $(function () {
 				}
 			});
 		});
+});
+
+$(function() {
+  // JSONデータをHTTP GETで取得
+  $.getJSON(
+    'data.js', // アクセス先のURL
+    function(data, status) {
+      console.log(data);
+    }
+  );
 });
