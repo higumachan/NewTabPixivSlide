@@ -16,18 +16,13 @@
     "persistent": false
   },
   "content_scripts": [
-    {
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ],
-      "js": ["scripts/jquery.js"]
-    }
   ],
   "permissions": [
     "tabs",
-    "http://*/*",
-    "https://*/*"
+    "http://www.pixiv.net/*",
+    "https://www.pixiv.net/*",
+    "http://spapi.pixiv.net/*",
+    "https://spapi.pixiv.net/*"
   ],
   "chrome_url_overrides": {
     "newtab": "newtab/newtab.html"
