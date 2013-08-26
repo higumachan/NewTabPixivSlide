@@ -3,12 +3,10 @@ var getURL = function(callback) {
 	$.get("http://spapi.pixiv.net/iphone/ranking.php?mode=day",　function(data) {
 		var match = data.match(/"http:\/\/[^"]+?mw\.jpg[^"]*?"/g);
 		// 画像を表示する
-		// document.getElementById("images").src = match[0];
     var urls = $(match).map(function() {
       return this.replace(/^"|"$/g, "");
     });
 		callback(urls);
-    console.log(urls);
   });
 };
 
