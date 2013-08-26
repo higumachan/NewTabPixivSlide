@@ -14,3 +14,4 @@ chrome.runtime.sendMessage({type: "getURL"}, function(response) {
   showImages(response.urls);
 });
 
+//Port: Could not establish connection. REceiving end does not exist.
