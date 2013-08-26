@@ -7,13 +7,17 @@
     "48": "icons/48.png",
     "128": "icons/128.png"
   },
-  
+  "content_scripts": [
+    {
+      "matches": ["http://www.pixiv.net/*", "https://www.pixiv.net/*"],
+      "js": ["scripts/contents.js"],
+      "run_at": "document_idle"
+    }
+  ],
   "background": {
     "scripts": ["scripts/jquery.js", "scripts/background.js"],
     "persistent": false
   },
-  "content_scripts": [
-  ],
   "permissions": [
     "tabs",
     "http://www.pixiv.net/*",

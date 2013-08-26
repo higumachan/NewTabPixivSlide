@@ -7,3 +7,7 @@
 	margin: auto;
 	text-align: center;
 }
+
+.logged_in .login_link {
+  display: none;
+}
