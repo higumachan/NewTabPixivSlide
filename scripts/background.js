@@ -14,7 +14,29 @@ var getDailyRanking = function (callback) {
   getIllusts(callback, "http://spapi.pixiv.net/iphone/ranking.php?mode=day");
 };
 
+var checkValidPHPSESSID = function (callback, url){
+  var state = false;
+  $.get(url,　function(data) {
+    if (data === null)
+      state = true;
+    console.log(data);
+  });
+  console.log(state);
+  callback(state);
+};
+
 var getFavoritedIllusts = function (callback) {
+  var checkurl = "http://spapi.pixiv.net/iphone/bookmark.php?c_mode=count&PHPSESSID=" +
+    encodeURIComponent(localStorage.phpsessid);
+
+  $.get(checkurl,　function(data) {
+    if (data === ""){
+      localStorage.removeItem("phpsessid");
+      return;
+    }
+    console.log(localStorage.phpsessid);
+  });
+
   getIllusts(callback,
     "http://spapi.pixiv.net/iphone/bookmark.php?PHPSESSID=" +
     encodeURIComponent(localStorage.phpsessid));
@@ -40,6 +62,13 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
   return true;
 });
 
+/*
+function validPHPSESSID = function(){
+  var src = "http://spapi.pixiv.net/iphone/profile.php?PHPSESSID=" +  encodeURIComponent(localStorage.phpsessid);
+  var valid = document.getElementsByTagName(src."table"); ? true : false;
+});
+*/
+
 // phpsessidの有無 -> newtab
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
   if (request.type != "getLoginStatus") return;
@@ -47,7 +76,7 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
   sendResponse(localStorage.hasOwnProperty("phpsessid"));
 });
 
-// contentからphpsessidの中身が来る -> ある:中身を返す/ない:null
+// contentからphpsessidの中身が来る -> ある:中身をlocalStrageに保存/ない:logalStrageを消去
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
   if (request.type != "sendPHPSESSID") return;
 
@@ -61,4 +90,3 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
     localStorage.removeItem("phpsessid");
   }
 });
-

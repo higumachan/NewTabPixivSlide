@@ -33,7 +33,10 @@ jQuery(function($) {
     // ログイン->ユーザーのブックマーク / 非ログイン->デイリーランキング    
     var type = loggedIn ? "getFavoritedIllusts" : "getDailyRanking";
     chrome.runtime.sendMessage({type: type}, function(response) {
+      if (response.urls.length){
         showImages(response.urls);
+        return;
+      }
     });
   });
 });
