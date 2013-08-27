@@ -34,8 +34,14 @@ jQuery(function($) {
     var type = loggedIn ? "getFavoritedIllusts" : "getDailyRanking";
     chrome.runtime.sendMessage({type: type}, function(response) {
       if (response.urls.length){
+        console.log("hyouzi");
+        console.log(response.urls);
         showImages(response.urls);
-        return;
+      }
+      else {
+        console.log("nakamiganai");
+        loggedIn = false;
+        location.reload();
       }
     });
   });
