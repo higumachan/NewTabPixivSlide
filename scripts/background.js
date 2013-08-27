@@ -32,6 +32,7 @@ var getFavoritedIllusts = function (callback) {
   $.get(checkurl,　function(data) {
     if (data === ""){
       localStorage.removeItem("phpsessid");
+      callback("nai");
       return;
     }
     console.log(localStorage.phpsessid);
@@ -57,6 +58,7 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
   if (request.type != "getFavoritedIllusts") return;
 
   getFavoritedIllusts(function(urls) {
+    //console.log(typeof {usls: usls});
     sendResponse({urls: urls});
   });
   return true;
