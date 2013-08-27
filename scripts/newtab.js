@@ -6,6 +6,7 @@ var urls;
 var slideImage = function() {
   var num = Math.floor( Math.random() * 50);
   console.log(urls[num]);
+
   document.getElementById('image').src = urls[num];
 };
 var showImages = function(geturls){
@@ -15,12 +16,16 @@ var showImages = function(geturls){
     $("<img>").attr("src", this).appendTo("#images");
   });
 */
-  
+  slideImage();
   var inttime = 400;
   console.log("kita");
-  slideImage();
+  setInterval(function() {
+    slideImage();
+  }, 3000);
   console.log("owta");
 };
+
+
 
 
 
