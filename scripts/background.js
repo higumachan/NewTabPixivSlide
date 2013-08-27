@@ -1,4 +1,4 @@
-// pixivの画像のURLを返す
+// pixivのAPiを叩く
 var getIllusts = function(callback, url) {
 	$.get(url,　function(data) {
 		var match = data.match(/"http:\/\/[^"]+?mw\.jpg[^"]*?"/g);
@@ -6,8 +6,6 @@ var getIllusts = function(callback, url) {
     var urls = $(match).map(function() {
       return this.replace(/^"|"$/g, "");
     });
-    //console.log("URL get SUCCESS!");
-    //console.log(urls);
 		callback(urls);
   });
 };
@@ -22,7 +20,7 @@ var getFavoritedIllusts = function (callback) {
     encodeURIComponent(localStorage.phpsessid));
 };
 
-// newtab -> DailyRankingを返す  
+// newtab -> DailyRankingのURL郡を返す -> newtab  
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
   if (request.type != "getDailyRanking") return;
 
@@ -32,7 +30,7 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
   return true;
 });
 
-// newtab -> FavoritedIllustsを返す  
+// newtab -> FavoritedIllustsのURL郡を返す -> newtab
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
   if (request.type != "getFavoritedIllusts") return;
 
@@ -42,26 +40,25 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
   return true;
 });
 
-// phpsessidがあるか -> newtab
+// phpsessidの有無 -> newtab
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
   if (request.type != "getLoginStatus") return;
 
   sendResponse(localStorage.hasOwnProperty("phpsessid"));
 });
 
-// content -> phpsessid
+// contentからphpsessidの中身が来る -> ある:中身を返す/ない:null
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
   if (request.type != "sendPHPSESSID") return;
 
   if (request.phpsessid) {
     console.log(request.phpsessid);
+    // ローカルストレージに保存 
     localStorage.phpsessid = request.phpsessid;
   }
   else {
+    // ローカルストレージの中身を消去
     localStorage.removeItem("phpsessid");
   }
 });
 
-// http://spapi.pixiv.net/iphone/profile.php?PHPSESSID=
-// もしphpsessidが無効ならレスポンスに<table class="profile-table">が入っていない、そしたら localStorage からログイン情報を　（あとはじぶんでかんがえよう）
-// これをチェックするタイミングは getLoginStatus でいいと思う

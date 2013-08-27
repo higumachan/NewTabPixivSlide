@@ -8,6 +8,7 @@
 	text-align: center;
 }
 
+/* logged in のとき login_line を隠す */
 .logged_in .login_link {
   display: none;
 }
