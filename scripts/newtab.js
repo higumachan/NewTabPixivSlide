@@ -1,13 +1,29 @@
 // ログインをするときに使うフラグ
 var loggingIn = false;
+var urls;
 
 // 画像を表示する.
-var showImages = function(urls){
+var slideImage = function() {
+  var num = Math.floor( Math.random() * 50);
+  console.log(urls[num]);
+  document.getElementById('image').src = urls[num];
+};
+var showImages = function(geturls){
+  urls = geturls;
   console.log(urls);
-  $(urls).each(function() {
+/*  $(urls).each(function() {
     $("<img>").attr("src", this).appendTo("#images");
   });
+*/
+  
+  var inttime = 400;
+  console.log("kita");
+  slideImage();
+  console.log("owta");
 };
+
+
+
 
 jQuery(function($) {
   // ログインがクリックされたら
