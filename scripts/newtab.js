@@ -14,17 +14,20 @@ var slideImage = function() {
 var showImages = function(geturls){
   urls = geturls;
   console.log(urls);
-/*  $(urls).each(function() {
-    $("<img>").attr("src", this).appendTo("#images");
+  $(urls).each(function() {
+    $("<img>").attr("src", this).appendTo(".image");
   });
-*/
-  slideImage();
-  var inttime = 400;
-  console.log("kita");
-  setInterval(function() {
-    slideImage();
-  }, 3000);
-  console.log(urls.length);
+/*
+  $(function(){
+    $('img.image').maxImage({
+      isBackground: true,
+      slideShow: true,
+      slideShowTitle: false,
+      slideDelay: 5,
+      overflow: 'auto',
+      verticalAlign:'top'
+    });
+  });*/
 };
 
 var getIllust = function(type){
@@ -32,12 +35,10 @@ var getIllust = function(type){
   console.log("kita");
   chrome.runtime.sendMessage({type: type}, function(response) {
     if (response.urls === "0"){
- //     location.reload();
       var obj= document.getElementById("no_bookmark_urls");
       obj.style.display = "";
       type = "getDailyRanking";
       getIllust(type);
- //     console.log("kita");
     }
     else if (response.urls.length){
       loop = false;
