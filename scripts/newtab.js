@@ -39,9 +39,11 @@ var _slideShow = function () {
 	var i = 0;
 	setInterval(function () {
 		console.log("test");
-		$(images[i]).hide();
+		//$(images[i]).hide(500);
+		$(images[i]).fadeOut(500);
 		i = (i + 1) % imageCount;
-		$(images[i]).show();
+		//$(images[i]).show(500);
+		$(images[i]).fadeIn(500);
 	}, 5000);
 };
 
