@@ -28,14 +28,11 @@ var _slideShow = function () {
 		var window_height = $(window).height();
 		var width = orig_width * (window_height / orig_height);
 		$(this).css("position", "absolute");
-		$(this).css("margin", "0 auto");
 		$(this).css("top", 0);
 		$(this).css("left", (window_width / 2) - (width / 2) );
 		$(this).css("z-index", -1);
-		if (true){
-			$(this).css("height", window_height);
-			$(this).css("width", orig_width * (window_height / orig_height));
-		}
+		$(this).css("height", window_height);
+		$(this).css("width", orig_width * (window_height / orig_height));
 	});
 	
 	imageCount = images.length;
