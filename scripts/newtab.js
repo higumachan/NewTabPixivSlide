@@ -4,7 +4,7 @@ var loggingIn = false;
 var setImages = function(urls){
   console.log("set" , urls);
   $(urls).each(function() {
-    $("<img>").attr("src", this).appendTo(".bgmaximage");
+    $("<img>").attr("src", this).appendTo("#images");
     /* 
     <img src="hogehoge"> として追加されているみたいだが、
     class="bgmaximage"にはなってないみたい.
@@ -17,14 +17,14 @@ var setImages = function(urls){
 
 var slideImage = function(){
   console.log("kiteru");
-  $("img").attr('class', 'tst');
-  console.log($("div").attr("src"));
-  console.log($(".bgmaximage").attr("src"));
-  $('img.bgmaximage').maxImage({
+  console.log($("img").attr("src"));
+  console.log($("#images img").attr("src"));
+  $("img").hide();
+  $('#images img').maxImage({
     isBackground: true,
     slideShow: true,
     slideShowTitle: false,
-    slideDelay: 5,
+    slideDelay: 3,
     overflow: 'auto',
     verticalAlign:'top'
   });
@@ -34,7 +34,6 @@ var slideImage = function(){
 var showImages = function(urls){
   console.log(urls);
   // 画像をimgタグに突っ込む
-  $("#no_bookmark_urls").show();
   setImages(urls);
   // 画像をスライドさせる
   slideImage();
@@ -44,8 +43,7 @@ var showImages = function(urls){
 var getIllust = function(type){
   chrome.runtime.sendMessage({type: type}, function(response) {
     if (response.urls === "0"){
-      var obj= document.getElementById("no_bookmark_urls");
-      obj.style.display = "";
+      $("#no_bookmark_urls").show();
       type = "getDailyRanking";
       getIllust(type);
     }

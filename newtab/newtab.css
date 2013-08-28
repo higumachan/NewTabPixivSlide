@@ -6,7 +6,7 @@
   width: 100%;
 }
 
-.bgmaximage {
+#image {
   position: fixed !important;
   display: none;
 }
