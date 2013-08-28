@@ -2,13 +2,15 @@
 var loggingIn = false;
 var urls;
 
-// 画像を表示する.
+// 画像を1枚ずつ表示する.
 var slideImage = function() {
-  var num = Math.floor( Math.random() * 50);
+  var num = Math.floor( Math.random() * urls.length);
   console.log(urls[num]);
 
   document.getElementById('image').src = urls[num];
 };
+
+// 画像を表示
 var showImages = function(geturls){
   urls = geturls;
   console.log(urls);
@@ -22,13 +24,36 @@ var showImages = function(geturls){
   setInterval(function() {
     slideImage();
   }, 3000);
-  console.log("owta");
+  console.log(urls.length);
 };
 
-
-
-
-
+var getIllust = function(type){
+//  while (loop){
+  console.log("kita");
+  chrome.runtime.sendMessage({type: type}, function(response) {
+    if (response.urls === "0"){
+ //     location.reload();
+      var obj= document.getElementById("no_bookmark_urls");
+      obj.style.display = "";
+      type = "getDailyRanking";
+      getIllust(type);
+ //     console.log("kita");
+    }
+    else if (response.urls.length){
+      loop = false;
+      console.log(response.urls);
+      showImages(response.urls);
+    }
+    else {
+      // いると思ったんだが
+      // loggedIn = true; 
+      console.log(typeof response.urls);
+      console.log("reload前");
+      location.reload();
+    }
+    return;
+  });
+};
 
 jQuery(function($) {
   // ログインがクリックされたら
@@ -52,18 +77,9 @@ jQuery(function($) {
       $("body").addClass('logged_in');
 
     // ログイン->ユーザーのブックマーク / 非ログイン->デイリーランキング    
+    var loop = true;
     var type = loggedIn ? "getFavoritedIllusts" : "getDailyRanking";
-    chrome.runtime.sendMessage({type: type}, function(response) {
-      if (response.urls.length){
-        console.log(response.urls);
-        showImages(response.urls);
-      }
-      else {
-        loggedIn = true;
-        location.reload();
-      }
-      return;
-    });
+    getIllust(type);
   });
 });
 

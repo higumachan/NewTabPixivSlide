@@ -8,6 +8,10 @@
 	text-align: center;
 }
 
+#no_bookmark_urls {
+  text-align: center;
+}
+
 /* logged in のとき login_line を隠す */
 .logged_in .login_link {
   display: none;

@@ -30,9 +30,11 @@ var getFavoritedIllusts = function (callback) {
     encodeURIComponent(localStorage.phpsessid);
 
   $.get(checkurl,　function(data) {
-    if (data === ""){
-      localStorage.removeItem("phpsessid");
-      callback("nai");
+    if (data === "" || data === "0"){
+      if (data === ""){
+        localStorage.removeItem("phpsessid");
+      }
+      callback(data);
       return;
     }
     console.log(localStorage.phpsessid);
