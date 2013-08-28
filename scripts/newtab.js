@@ -1,17 +1,6 @@
 // ログインをするときに使うフラグ
 var loggingIn = false;
 
-// 画像を1枚ずつ表示する.
-/*
-var slideImage = function() {
-  var num = Math.floor( Math.random() * urls.length);
-  console.log(urls[num]);
-
-  document.getElementById('image').src = urls[num];
-};
-*/
-
-//jQuery(function($) {
 var setImages = function(urls){
   console.log("set" , urls);
   $(urls).each(function() {
@@ -43,11 +32,11 @@ var slideImage = function(){
 // 画像を表示
 var showImages = function(urls){
   console.log(urls);
-  // 
+  // 画像をimgタグに突っ込む
   setImages(urls);
+  // 画像をスライドさせる
   slideImage();
 };
-//});
 
 
 var getIllust = function(type){
@@ -102,11 +91,3 @@ jQuery(function($) {
   });
 });
 
-
-/*
-var tmp = $("img").attr("src");
-console.log(tmp);
-
-var tmp = $(".bgmaximage").attr("src");
-console.log(tmp);
-*/
