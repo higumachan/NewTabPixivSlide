@@ -17,7 +17,8 @@ var setImages = function(urls){
 
 var slideImage = function(){
   console.log("kiteru");
-  console.log($("img").attr("src"));
+  $("img").attr('class', 'tst');
+  console.log($("div").attr("src"));
   console.log($(".bgmaximage").attr("src"));
   $('img.bgmaximage').maxImage({
     isBackground: true,
@@ -33,6 +34,7 @@ var slideImage = function(){
 var showImages = function(urls){
   console.log(urls);
   // 画像をimgタグに突っ込む
+  $("#no_bookmark_urls").show();
   setImages(urls);
   // 画像をスライドさせる
   slideImage();
