@@ -1,11 +1,57 @@
 // ログインをするときに使うフラグ
 var loggingIn = false;
+var urls;
 
-// 画像を表示する.
-var showImages = function(urls){
+// 画像を1枚ずつ表示する.
+var slideImage = function() {
+  var num = Math.floor( Math.random() * urls.length);
+  console.log(urls[num]);
+
+  document.getElementById('image').src = urls[num];
+};
+
+// 画像を表示
+var showImages = function(geturls){
+  urls = geturls;
   console.log(urls);
-  $(urls).each(function() {
+/*  $(urls).each(function() {
     $("<img>").attr("src", this).appendTo("#images");
+  });
+*/
+  slideImage();
+  var inttime = 400;
+  console.log("kita");
+  setInterval(function() {
+    slideImage();
+  }, 3000);
+  console.log(urls.length);
+};
+
+var getIllust = function(type){
+//  while (loop){
+  console.log("kita");
+  chrome.runtime.sendMessage({type: type}, function(response) {
+    if (response.urls === "0"){
+ //     location.reload();
+      var obj= document.getElementById("no_bookmark_urls");
+      obj.style.display = "";
+      type = "getDailyRanking";
+      getIllust(type);
+ //     console.log("kita");
+    }
+    else if (response.urls.length){
+      loop = false;
+      console.log(response.urls);
+      showImages(response.urls);
+    }
+    else {
+      // いると思ったんだが
+      // loggedIn = true; 
+      console.log(typeof response.urls);
+      console.log("reload前");
+      location.reload();
+    }
+    return;
   });
 };
 
@@ -31,13 +77,9 @@ jQuery(function($) {
       $("body").addClass('logged_in');
 
     // ログイン->ユーザーのブックマーク / 非ログイン->デイリーランキング    
+    var loop = true;
     var type = loggedIn ? "getFavoritedIllusts" : "getDailyRanking";
-    chrome.runtime.sendMessage({type: type}, function(response) {
-      if (response.urls.length){
-        showImages(response.urls);
-        return;
-      }
-    });
+    getIllust(type);
   });
 });
 

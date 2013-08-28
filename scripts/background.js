@@ -30,8 +30,11 @@ var getFavoritedIllusts = function (callback) {
     encodeURIComponent(localStorage.phpsessid);
 
   $.get(checkurl,　function(data) {
-    if (data === ""){
-      localStorage.removeItem("phpsessid");
+    if (data === "" || data === "0"){
+      if (data === ""){
+        localStorage.removeItem("phpsessid");
+      }
+      callback(data);
       return;
     }
     console.log(localStorage.phpsessid);
@@ -57,6 +60,7 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
   if (request.type != "getFavoritedIllusts") return;
 
   getFavoritedIllusts(function(urls) {
+    //console.log(typeof {usls: usls});
     sendResponse({urls: urls});
   });
   return true;
