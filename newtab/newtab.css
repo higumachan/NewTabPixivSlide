@@ -6,6 +6,10 @@
   width: 100%;
 }
 
+.bgmaximage {
+  position: fixed !important;
+  display: none;
+}
 
 .change {
 	width: 150px;

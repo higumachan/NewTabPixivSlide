@@ -1,38 +1,56 @@
 // ログインをするときに使うフラグ
 var loggingIn = false;
-var urls;
 
 // 画像を1枚ずつ表示する.
+/*
 var slideImage = function() {
   var num = Math.floor( Math.random() * urls.length);
   console.log(urls[num]);
 
   document.getElementById('image').src = urls[num];
 };
+*/
 
-// 画像を表示
-var showImages = function(geturls){
-  urls = geturls;
-  console.log(urls);
+//jQuery(function($) {
+var setImages = function(urls){
+  console.log("set" , urls);
   $(urls).each(function() {
-    $("<img>").attr("src", this).appendTo(".image");
+    $("<img>").attr("src", this).appendTo(".bgmaximage");
+    /* 
+    <img src="hogehoge"> として追加されているみたいだが、
+    class="bgmaximage"にはなってないみたい.
+    var tmp = ;
+    console.log($("img").attr("src")); # => http://i2.pixiv.net/img54/img/asukaziye/mobile/38074165_480mw.jpg 
+    console.log($(".bgmaximage").attr("src")); # => undefined 
+    */
   });
-/*
-  $(function(){
-    $('img.image').maxImage({
-      isBackground: true,
-      slideShow: true,
-      slideShowTitle: false,
-      slideDelay: 5,
-      overflow: 'auto',
-      verticalAlign:'top'
-    });
-  });*/
 };
 
+var slideImage = function(){
+  console.log("kiteru");
+  console.log($("img").attr("src"));
+  console.log($(".bgmaximage").attr("src"));
+  $('img.bgmaximage').maxImage({
+    isBackground: true,
+    slideShow: true,
+    slideShowTitle: false,
+    slideDelay: 5,
+    overflow: 'auto',
+    verticalAlign:'top'
+  });
+};
+
+// 画像を表示
+var showImages = function(urls){
+  console.log(urls);
+  // 
+  setImages(urls);
+  slideImage();
+};
+//});
+
+
 var getIllust = function(type){
-//  while (loop){
-  console.log("kita");
   chrome.runtime.sendMessage({type: type}, function(response) {
     if (response.urls === "0"){
       var obj= document.getElementById("no_bookmark_urls");
@@ -84,3 +102,11 @@ jQuery(function($) {
   });
 });
 
+
+/*
+var tmp = $("img").attr("src");
+console.log(tmp);
+
+var tmp = $(".bgmaximage").attr("src");
+console.log(tmp);
+*/
