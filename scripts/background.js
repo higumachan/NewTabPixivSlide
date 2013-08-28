@@ -6,8 +6,7 @@ var getIllusts = function(callback, url) {
     var urls = $(match).map(function() {
       return this.replace(/^"|"$/g, "");
     });
-    console.log("urls get" + urls);
-    callback(urls);
+		callback(urls);
   });
 };
 
@@ -15,49 +14,32 @@ var getDailyRanking = function (callback) {
   getIllusts(callback, "http://spapi.pixiv.net/iphone/ranking.php?mode=day");
 };
 
-var checkValidPHPSESSID = function (url, callback){
+var checkValidPHPSESSID = function (callback, url){
+  var state = false;
   $.get(url,　function(data) {
-    var state = true;
+    if (data === null)
+      state = true;
     console.log(data);
-    if (data === "" || data === "0"){
-      state = false;
-    }
-    callback(state);
   });
+  console.log(state);
+  callback(state);
 };
 
 var getFavoritedIllusts = function (callback) {
-  // PHPSESSIDが有効かチェック
   var checkurl = "http://spapi.pixiv.net/iphone/bookmark.php?c_mode=count&PHPSESSID=" +
     encodeURIComponent(localStorage.phpsessid);
-  var state;
-  checkValidPHPSESSID(checkurl, function(callback){
-    state = callback;
 
-    // 有効:ブックマーク画像を表示 
-    if (state){
-      console.log(state);
-      getIllusts(callback,
-      "http://spapi.pixiv.net/iphone/bookmark.php?PHPSESSID=" +
-      encodeURIComponent(localStorage.phpsessid));
-    }
-    // 無効:
-    else {
-      console.log("mujki- kita");
-      localStorage.removeItem("phpsessid");
-    }
-  });
-
-  /*
   $.get(checkurl,　function(data) {
     if (data === ""){
       localStorage.removeItem("phpsessid");
-      callback = null;
       return;
     }
     console.log(localStorage.phpsessid);
   });
-  */
+
+  getIllusts(callback,
+    "http://spapi.pixiv.net/iphone/bookmark.php?PHPSESSID=" +
+    encodeURIComponent(localStorage.phpsessid));
 };
 
 // newtab -> DailyRankingのURL郡を返す -> newtab  
