@@ -15,11 +15,46 @@ var setImages = function(urls){
   });
 };
 
+var imageCount;
+
+var _slideShow = function () {
+	var images = $("img");
+	images.each(function() {
+		console.log(this);
+		var orig_width = this.naturalWidth;
+		var orig_height = this.naturalHeight;
+		console.log($(window).width() );
+		var window_width = $(window).width();
+		var window_height = $(window).height();
+		var width = orig_width * (window_height / orig_height);
+		$(this).css("position", "absolute");
+		$(this).css("margin", "0 auto");
+		$(this).css("top", 0);
+		$(this).css("left", (window_width / 2) - (width / 2) );
+		$(this).css("z-index", -1);
+		if (true){
+			$(this).css("height", window_height);
+			$(this).css("width", orig_width * (window_height / orig_height));
+		}
+	});
+	
+	imageCount = images.length;
+	var i = 0;
+	setInterval(function () {
+		console.log("test");
+		$(images[i]).hide();
+		i = (i + 1) % imageCount;
+		$(images[i]).show();
+	}, 5000);
+};
+
 var slideImage = function(){
   console.log("kiteru");
   console.log($("img").attr("src"));
   console.log($("#images img").attr("src"));
   $("img").hide();
+  _slideShow();
+  /*
   $('#images img').maxImage({
     isBackground: true,
     slideShow: true,
@@ -28,6 +63,7 @@ var slideImage = function(){
     overflow: 'auto',
     verticalAlign:'top'
   });
+  */
 };
 
 // 画像を表示
